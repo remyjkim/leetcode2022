@@ -1,30 +1,18 @@
-class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        cur_max = 0
-        start, end = 0, 0
-        for i in s:
-            if i not in s[start:end]:
-                end += 1
-                if end - start > cur_max:
-                    cur_max = end - start
-            else:
-                start_from = s[start:end].index(i)
-                start += (start_from + 1)
-                end += 1
-
-            print(f"looked at {i} and s[start:end] is {s[start:end]}")
-
-        return cur_max
-
+# Runtime: 52 ms, faster than 98.91% of Python3 online submissions for Longest Substring Without Repeating Characters.
+# Runtime은 개 랜덤인듯
+# Memory Usage: 14.1 MB, less than 49.61% of Python3 online submissions for Longest Substring Without Repeating Characters.
+# TODO: learning - Be careful with sliding window, and think carefully about where to start over
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        cur_max = 0
-        track = ""
-        for i in s:
-            if i not in track:
-                track += i
-                cur_max = max(len(track), cur_max)
+        max_length = 0
+        cur_str = ""
+        for i in range(len(s)):
+            if s[i] not in cur_str:
+                cur_str += s[i]
+                max_length = max(max_length, len(cur_str))
             else:
-                track = track[track.index(i)+1:]+i
-        return cur_max
+                ind = cur_str.index(s[i])
+                cur_str = cur_str[ind + 1:] + s[i]
+            # print(i,"th: ", cur_str)
+        return max_length
